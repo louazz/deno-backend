@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  web:
+   build:
+   container_name: deno-container
+   image: deno-image
+   port:
+     - "8000:8000"
