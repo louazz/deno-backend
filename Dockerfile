@@ -6,6 +6,6 @@ WORKDIR /app
 
 ADD . /app
 
-RUN deno cache main.ts
+RUN deno cache app.ts
 
-CMD ["run", "-A", "main.ts"]
+CMD ["run", "-A", "app.ts"]
