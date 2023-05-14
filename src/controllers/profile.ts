@@ -6,8 +6,6 @@ import { ProfileSchema } from "../schema/profile.ts";
 import { any } from "https://cdn.skypack.dev/ramda@^0.27.1";
 import { request } from "https://deno.land/x/opine@2.3.4/mod.ts";
 import { response } from "https://deno.land/x/opine@2.3.4/mod.ts";
-import { ERROR_ACCESS_DISABLED_WEBBLADE_TAMPER } from "https://deno.land/std@0.177.0/node/internal_binding/_winerror.ts";
-
 const profiles= db.collection<ProfileSchema>('profile');
 
 export const createProfile= async(

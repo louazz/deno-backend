@@ -7,14 +7,5 @@ services:
     image: deno-image
     ports:
       - "8000:8000"
-    depends_on:
-      - mongo
-  mongo:
-    image: mongo
-    command: mongod --port 5000
-    ports:
-      - '5000:5000'
-    volumes:
-      - dbdata6:/data/db
 volumes:
   dbdata6:
