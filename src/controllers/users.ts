@@ -11,9 +11,9 @@ const client = new SmtpClient();
 
 await client.connectTLS({
   hostname: "smtp.gmail.com",
-  port: 465,
+  port: 587,
   username: "encrygen@gmail.com",
-  password: "qmjdlswmyjqtzbug",
+  password: "zwvmanochuwtgubp",
 });
 
 const profiles= db.collection<ProfileSchema>('profile');
