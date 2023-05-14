@@ -13,7 +13,7 @@ router.post("/api/signin", signin);
 
 router.get("/api/posts", getPosts);
 router.post("/api/posts", authorized, create);
-router.get("/api/posts/:postId", authorized, getById);
+router.get("/api/posts/:postId", getById);
 router.get("/api/posts/:userId", authorized, getByUserId);
 router.patch("/api/posts/:postId", authorized, updateById);
 router.delete("/api/posts",authorized ,deletePost);
