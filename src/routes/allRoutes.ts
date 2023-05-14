@@ -5,6 +5,7 @@ import {createApp, findByPostId, fileUpload, findByUserId} from "../controllers/
 import { authorized} from "../middlewares/isAuthorized.ts"
 import { UpdateProfile, createProfile, deleteProfileAll, fileExplore, findProfile, getProfiles } from "../controllers/profile.ts";
 
+
 const router = new Router();
 
 router.post("/api/signup", signup);

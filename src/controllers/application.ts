@@ -13,7 +13,7 @@ const client = new SmtpClient();
 
 await client.connectTLS({
   hostname: "smtp.gmail.com",
-  port: 587,
+  port: 465,
   username: "encrygen@gmail.com",
   password: "zwvmanochuwtgubp",
 });

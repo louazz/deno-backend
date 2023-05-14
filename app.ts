@@ -6,8 +6,7 @@ const app = new Application();
 
 const PORT = 8000;
 
-app.use(oakCors({   origin: 'http://64.226.102.153:8000',
-optionsSuccessStatus: 200,}));
+app.use(oakCors());
 app.use(router.routes());
 app.use(router.allowedMethods());
 
