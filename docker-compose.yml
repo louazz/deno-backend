@@ -5,8 +5,6 @@ services:
     build: .
     container_name: deno-container
     image: deno-image
-    environment:
-      - MONGODB_URL=mongodb://mongo:27017/deno
     ports:
       - "8000:8000"
     depends_on:

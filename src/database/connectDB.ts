@@ -2,7 +2,7 @@ import { MongoClient } from "https://deno.land/x/mongo@v0.30.0/mod.ts";
 
 const client = new MongoClient();
 
-const dbString= "mongodb://mongo:5000";
+const dbString= "mongodb://mongodb:5000/deno";
 
 await client.connect(dbString);
 
