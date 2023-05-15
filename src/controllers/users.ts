@@ -3,21 +3,17 @@ import * as bcrypt from "https://deno.land/x/bcrypt/mod.ts";
 import { UserSchema } from "../schema/user.ts";
 import { create } from "https://deno.land/x/djwt/mod.ts";
 import { key } from "../utils/apiKey.ts";
-//import { SmtpClient } from "https://deno.land/x/smtp/mod.ts";
+import { SmtpClient } from "https://deno.land/x/smtp/mod.ts";
 import { ProfileSchema } from "../schema/profile.ts";
 import { ObjectId } from "https://deno.land/x/web_bson@v0.2.2/src/objectid.ts";
-import { SMTPClient } from "https://deno.land/x/denomailer/mod.ts";
 
-const client = new SMTPClient({
-  connection: {
-    hostname: "smtp-relay.sendinblue.com",
-    port: 465,
-    tls: true,
-    auth: {
-      username: "encrygen@gmail.com",
-      password: "xOr9PCUjFHbDLKv0",
-    },
-  },
+const client = new SmtpClient();
+
+await client.connect({
+  hostname: "smtp-relay.sendinblue.com",
+  port: 587,
+  username: "encrygen@gmail.com",
+  password: "xOr9PCUjFHbDLKv0",
 });
 
 
