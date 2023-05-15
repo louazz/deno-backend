@@ -34,7 +34,8 @@ export const signup = async (
     from: "louai.zaiter@ultimatejobs.co",
     to: email,
     subject: "thanks for registering",
-    html: `<p>Dear ${username}<br/> Welcome to our awesome app. Now you can browse and apply to featured jobs 💡 <br/> Best Regards,<br/> JobHunter Team</p>`,
+    html: `<p>Dear ${username}<br/> <br/>Welcome to our awesome app.  <br/>  Now you can browse and apply to featured jobs at <a href="https://ultimatejobs.co" >Ultimatejobs.co</a> 💡 
+    <br/> <br/>Best Regards,<br/> JobHunter Team</p>`,
     content: ""
 });
   
