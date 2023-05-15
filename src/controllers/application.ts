@@ -34,7 +34,7 @@ post_id: new ObjectId(post_id),
 })
   const user = await Users.findOne({_id: new ObjectId(user_id)});
   const post = await Posts.findOne({_id: new ObjectId(post_id)});
-  if ( user!= undefined && post!= undefined){
+
     await client.send({
       from: "louai.zaiter@ultimatejobs.co",
         to: user.email,
@@ -44,8 +44,8 @@ post_id: new ObjectId(post_id),
         });
     
         console.log("email sent")
-    }
-    await client.close()
+ 
+    await client.close()   
     response.status=201;
     response.body= {message: "application created", appId: _id}
 }
