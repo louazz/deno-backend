@@ -8,6 +8,9 @@ import { any } from "https://cdn.skypack.dev/ramda@^0.27.1";
 import { UserSchema } from "../schema/user.ts";
 import { PostSchema } from "../schema/post.ts";
 import { SmtpClient } from "https://deno.land/x/smtp/mod.ts";
+import { Context } from "https://deno.land/x/oak/mod.ts";
+import { verify } from "https://deno.land/x/djwt/mod.ts";
+import { key } from "../utils/apiKey.ts";
 
 const client = new SmtpClient();
 
@@ -25,8 +28,28 @@ const Users = db.collection<UserSchema>("users");
 const Posts = db.collection<PostSchema>("post");
 
 export const createApp = async (
-    {request, response}: {request: any, response: any},
+    {ctx,request, response}: {ctx: Context,request: any, response: any},
 )=>{
+
+  try {
+    const headers: Headers = ctx.request.headers;
+    const authorization = headers.get("Authorization");
+    if (!authorization) {
+      ctx.response.status = 401;
+      return;
+    }
+    const jwt = authorization.split(" ")[1];
+    if (!jwt) {
+      ctx.response.status = 401;
+      return;
+    }
+    const payload = await verify(jwt, key);
+    if (!payload) {
+      throw new Error("!payload");
+    }
+  
+
+
     const {user_id, post_id}= await request.body().value;
     const _id = await  applications.insertOne({
 user_id: new ObjectId(user_id),
@@ -48,7 +71,13 @@ post_id: new ObjectId(post_id),
     await client.close()   
     response.status=201;
     response.body= {message: "application created", appId: _id}
-}
+  } catch (error) {
+    ctx.response.status = 401;
+    ctx.response.body = { message: "You are not Authorized to access route" };
+    return;
+  }
+
+  }
 
 export const findByPostId= async (
     {params, response}: {params: {postId: string}; response:any}
