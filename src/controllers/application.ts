@@ -12,10 +12,10 @@ import { SmtpClient } from "https://deno.land/x/smtp/mod.ts";
 const client = new SmtpClient();
 
 await client.connectTLS({
-  hostname: "smtp.gmail.com",
-  port: 465,
-  username: "encrygen@gmail.com",
-  password: "zwvmanochuwtgubp",
+  hostname: "smtp.office365.com",
+  port: 587,
+  username: "louai.zaiter@ultimatejobs.co",
+  password: "12AZqswx!!",
 });
 
 const applications= db.collection<ApplicationSchema>("application")

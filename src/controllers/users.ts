@@ -10,11 +10,12 @@ import { ObjectId } from "https://deno.land/x/web_bson@v0.2.2/src/objectid.ts";
 const client = new SmtpClient();
 
 await client.connectTLS({
-  hostname: "smtp.gmail.com",
-  port: 465,
-  username: "encrygen@gmail.com",
-  password: "zwvmanochuwtgubp",
+  hostname: "smtp.office365.com",
+  port: 587,
+  username: "louai.zaiter@ultimatejobs.co",
+  password: "12AZqswx!!",
 });
+
 
 const profiles= db.collection<ProfileSchema>('profile');
 const Users = db.collection<UserSchema>("users");
