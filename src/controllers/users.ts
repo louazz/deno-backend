@@ -9,11 +9,11 @@ import { ObjectId } from "https://deno.land/x/web_bson@v0.2.2/src/objectid.ts";
 
 const client = new SmtpClient();
 
-await client.connectTLS({
-  hostname: "smtp.office365.com",
+await client.connect({
+  hostname: "smtp-relay.sendinblue.com",
   port: 587,
-  username: "louai.zaiter@ultimatejobs.co",
-  password: "12AZqswx!!",
+  username: "encrygen@gmail.com",
+  password: "xOr9PCUjFHbDLKv0",
 });
 
 
@@ -31,14 +31,13 @@ export const signup = async (
     password: hashedPassword,
   });
   await client.send({
-    from: "encrygen@gmail.com ",
+    from: "louai.zaiter@ultimatejobs.co",
     to: email,
-    subject: "thanks for registering 💡",
+    subject: "thanks for registering",
     html: `<p>Dear ${username}<br/> Welcome to our awesome app. Now you can browse and apply to featured jobs 💡 <br/> Best Regards,<br/> JobHunter Team</p>`,
     content: ""
 });
   
-  await client.close();
   response.status = 200;
   response.body = { message: "user created", userId: _id, user: username };
 };

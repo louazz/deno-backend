@@ -11,12 +11,14 @@ import { SmtpClient } from "https://deno.land/x/smtp/mod.ts";
 
 const client = new SmtpClient();
 
-await client.connectTLS({
-  hostname: "smtp.office365.com",
+
+await client.connect({
+  hostname: "smtp-relay.sendinblue.com",
   port: 587,
-  username: "louai.zaiter@ultimatejobs.co",
-  password: "12AZqswx!!",
+  username: "encrygen@gmail.com",
+  password: "xOr9PCUjFHbDLKv0",
 });
+
 
 const applications= db.collection<ApplicationSchema>("application")
 const Users = db.collection<UserSchema>("users");
@@ -34,15 +36,17 @@ post_id: new ObjectId(post_id),
   const post = await Posts.findOne({_id: new ObjectId(post_id)});
   if ( user!= undefined){
     await client.send({
-        from: "encrygen@gmail.com ",
+      from: "louai.zaiter@ultimatejobs.co",
         to: user.email,
-        subject: `thanks for applying to ${post?.title} 💡`,
+        subject: `thanks for applying to ${post?.title}`,
         html: `<p>Dear ${user.username}<br/> You have applied to ${post?.title} at ${post?.company}.<br/> We will review your CV and get back to you soon.🤖  <br/>  Best Regards,<br/>  JobHunter Team</p>`,
         content: ""
         });
     
         console.log("email sent")
     }
+
+await client.close();
     response.status=201;
     response.body= {message: "application created", appId: _id}
 }
