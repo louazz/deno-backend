@@ -47,6 +47,8 @@ post_id: new ObjectId(post_id),
         await client.close()
         console.log("email sent")}catch(error){
           console.log(error);
+          response.status=201;
+          return;
         }
     }
     
