@@ -3,17 +3,21 @@ import * as bcrypt from "https://deno.land/x/bcrypt/mod.ts";
 import { UserSchema } from "../schema/user.ts";
 import { create } from "https://deno.land/x/djwt/mod.ts";
 import { key } from "../utils/apiKey.ts";
-import { SmtpClient } from "https://deno.land/x/smtp/mod.ts";
+//import { SmtpClient } from "https://deno.land/x/smtp/mod.ts";
 import { ProfileSchema } from "../schema/profile.ts";
 import { ObjectId } from "https://deno.land/x/web_bson@v0.2.2/src/objectid.ts";
+import { SMTPClient } from "https://deno.land/x/denomailer/mod.ts";
 
-const client = new SmtpClient();
-
-await client.connect({
-  hostname: "smtp-relay.sendinblue.com",
-  port: 587,
-  username: "encrygen@gmail.com",
-  password: "xOr9PCUjFHbDLKv0",
+const client = new SMTPClient({
+  connection: {
+    hostname: "smtp-relay.sendinblue.com",
+    port: 465,
+    tls: true,
+    auth: {
+      username: "encrygen@gmail.com",
+      password: "xOr9PCUjFHbDLKv0",
+    },
+  },
 });
 
 
@@ -33,10 +37,12 @@ export const signup = async (
   await client.send({
     from: "louai.zaiter@ultimatejobs.co",
     to: email,
-    subject: "Thanks for registering",
-    content: "Dear"+ username+",\nThanks for registering at UltimateJobs.io.\nNow you can browse open vacancies and apply with one click after setting up your profile.\nBest regards,\nUltimateJobs Team."
+    subject: "thanks for registering",
+    html: `<p>Dear ${username}<br/> <br/>Welcome to our awesome app.  <br/>  Now you can browse and apply to featured jobs at <a href="https://ultimatejobs.co" >Ultimatejobs.co</a> 💡 
+    <br/> <br/>Best Regards,<br/> JobHunter Team</p>`,
+    content: ""
 });
-  await client.close();
+  await client.close()
   response.status = 200;
   response.body = { message: "user created", userId: _id, user: username };
 };

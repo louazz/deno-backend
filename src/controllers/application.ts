@@ -7,16 +7,18 @@ import { multiParser } from 'https://deno.land/x/multiparser/mod.ts'
 import { any } from "https://cdn.skypack.dev/ramda@^0.27.1";
 import { UserSchema } from "../schema/user.ts";
 import { PostSchema } from "../schema/post.ts";
-import { SmtpClient } from "https://deno.land/x/smtp/mod.ts";
+import { SMTPClient } from "https://deno.land/x/denomailer/mod.ts";
 
-const client = new SmtpClient();
-
-
-await client.connect({
-  hostname: "smtp-relay.sendinblue.com",
-  port: 587,
-  username: "encrygen@gmail.com",
-  password: "xOr9PCUjFHbDLKv0",
+const client = new SMTPClient({
+  connection: {
+    hostname: "smtp-relay.sendinblue.com",
+    port: 465,
+    tls: true,
+    auth: {
+      username: "encrygen@gmail.com",
+      password: "xOr9PCUjFHbDLKv0",
+    },
+  },
 });
 
 
@@ -39,7 +41,8 @@ post_id: new ObjectId(post_id),
       from: "louai.zaiter@ultimatejobs.co",
         to: user.email,
         subject: `thanks for applying to ${post.title}`,
-        content: "Dear" +user.username+"\n Thanks for applying to" +post.title+" at ${post.company}.\n We will review your application and come back to you soon.\nBest regards,\nUltimatejobs Team"
+        html: `<p>Dear ${user.username}<br/> You have applied to ${post.title} at ${post.company}.<br/> We will review your CV and get back to you soon.🤖  <br/>  Best Regards,<br/>  JobHunter Team</p>`,
+        content: ""
         });
         await client.close()
         console.log("email sent")
