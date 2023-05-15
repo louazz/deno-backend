@@ -39,11 +39,7 @@ post_id: new ObjectId(post_id),
       from: "louai.zaiter@ultimatejobs.co",
         to: user.email,
         subject: `thanks for applying to ${post.title}`,
-        content: `Dear ${user.username},\n 
-        Thanks for applying to ${post.title} at ${post.company}.\n  
-        We will review your application and come back to you soon 🤖.\n
-        Best regards,\n
-        Ultimatejobs Team`
+        content: "Dear" +user.username+"\n Thanks for applying to" +post.title+" at ${post.company}.\n We will review your application and come back to you soon.\nBest regards,\nUltimatejobs Team"
         });
         await client.close()
         console.log("email sent")

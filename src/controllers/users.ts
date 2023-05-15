@@ -33,12 +33,8 @@ export const signup = async (
   await client.send({
     from: "louai.zaiter@ultimatejobs.co",
     to: email,
-    subject: "thanks for registering",
-    content: `Dear ${username},\n
-    Thanks for registering at 🤖 UltimateJobs.io.\n
-    Now you can browse open vacancies and apply with one click after setting up your profile.\n
-    Best regards,\n
-    UltimateJobs Team.`
+    subject: "Thanks for registering",
+    content: "Dear"+ username+",\nThanks for registering at UltimateJobs.io.\nNow you can browse open vacancies and apply with one click after setting up your profile.\nBest regards,\nUltimateJobs Team."
 });
   await client.close();
   response.status = 200;
