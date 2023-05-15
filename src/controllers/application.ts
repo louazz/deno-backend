@@ -28,9 +28,10 @@ const Users = db.collection<UserSchema>("users");
 const Posts = db.collection<PostSchema>("post");
 
 export const createApp = async (
-    {ctx,request, response}: {ctx: Context,request: any, response: any},
+    {ctx, next}: {ctx: Context, next: any}
 )=>{
-
+  const response= ctx.response;
+  const request= ctx.request;
   try {
     const headers: Headers = ctx.request.headers;
     const authorization = headers.get("Authorization");
