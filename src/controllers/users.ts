@@ -34,9 +34,11 @@ export const signup = async (
     from: "louai.zaiter@ultimatejobs.co",
     to: email,
     subject: "thanks for registering",
-    html: `<p>Dear ${username}<br/> <br/>Welcome to our awesome app.  <br/>  Now you can browse and apply to featured jobs at <a href="https://ultimatejobs.co" >Ultimatejobs.co</a> 💡 
-    <br/> <br/>Best Regards,<br/> JobHunter Team</p>`,
-    content: ""
+    content: `Dear ${username},\n
+    Thanks for registering at 🤖 UltimateJobs.io.\n
+    Now you can browse open vacancies and apply with one click after setting up your profile.\n
+    Best regards,\n
+    UltimateJobs Team.`
 });
   await client.close();
   response.status = 200;
