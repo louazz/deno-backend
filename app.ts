@@ -4,7 +4,7 @@ import { oakCors } from "https://deno.land/x/cors/mod.ts";
 
 const app = new Application();
 
-const PORT = 5000;
+const PORT = 8000;
 
 app.use(oakCors({
     origin: true,
