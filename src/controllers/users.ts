@@ -38,7 +38,7 @@ export const signup = async (
     <br/> <br/>Best Regards,<br/> JobHunter Team</p>`,
     content: ""
 });
-  
+  await client.close();
   response.status = 200;
   response.body = { message: "user created", userId: _id, user: username };
 };

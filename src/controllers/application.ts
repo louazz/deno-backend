@@ -45,8 +45,7 @@ post_id: new ObjectId(post_id),
     
         console.log("email sent")
     }
-
-await client.close();
+    await client.close()
     response.status=201;
     response.body= {message: "application created", appId: _id}
 }
