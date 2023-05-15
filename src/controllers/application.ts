@@ -37,7 +37,7 @@ post_id: new ObjectId(post_id),
   const user = await Users.findOne({_id: new ObjectId(user_id)});
   const post = await Posts.findOne({_id: new ObjectId(post_id)});
   if ( user!= undefined && post!= undefined){
-    await client.send({
+   try{ await client.send({
       from: "louai.zaiter@ultimatejobs.co",
         to: user.email,
         subject: `thanks for applying to ${post.title}`,
@@ -45,7 +45,9 @@ post_id: new ObjectId(post_id),
         content: ""
         });
         await client.close()
-        console.log("email sent")
+        console.log("email sent")}catch(error){
+          console.log(error);
+        }
     }
     
     response.status=201;
