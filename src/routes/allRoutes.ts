@@ -20,7 +20,7 @@ router.delete("/api/posts",authorized ,deletePost);
 router.delete("/api/posts/all" ,deleteAll);
 
 
-router.post("/api/apply", authorized, createApp);
+router.post("/api/apply", createApp);
 router.get("/api/apply/:postId", authorized, findByPostId);
 router.get("/api/apply/user/:userId", authorized, findByUserId);
 
