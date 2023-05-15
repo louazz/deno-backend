@@ -8,9 +8,6 @@ import { any } from "https://cdn.skypack.dev/ramda@^0.27.1";
 import { UserSchema } from "../schema/user.ts";
 import { PostSchema } from "../schema/post.ts";
 import { SmtpClient } from "https://deno.land/x/smtp/mod.ts";
-import { Context } from "https://deno.land/x/oak/mod.ts";
-import { verify } from "https://deno.land/x/djwt/mod.ts";
-import { key } from "../utils/apiKey.ts";
 
 const client = new SmtpClient();
 
@@ -28,29 +25,8 @@ const Users = db.collection<UserSchema>("users");
 const Posts = db.collection<PostSchema>("post");
 
 export const createApp = async (
-    {ctx, next}: {ctx: Context, next: any}
+    {request, response}: {request: any, response: any},
 )=>{
-  const response= ctx.response;
-  const request= ctx.request;
-  try {
-    const headers: Headers = ctx.request.headers;
-    const authorization = headers.get("Authorization");
-    if (!authorization) {
-      ctx.response.status = 401;
-      return;
-    }
-    const jwt = authorization.split(" ")[1];
-    if (!jwt) {
-      ctx.response.status = 401;
-      return;
-    }
-    const payload = await verify(jwt, key);
-    if (!payload) {
-      throw new Error("!payload");
-    }
-  
-
-
     const {user_id, post_id}= await request.body().value;
     const _id = await  applications.insertOne({
 user_id: new ObjectId(user_id),
@@ -58,27 +34,21 @@ post_id: new ObjectId(post_id),
 })
   const user = await Users.findOne({_id: new ObjectId(user_id)});
   const post = await Posts.findOne({_id: new ObjectId(post_id)});
-
+  if ( user!= undefined && post!= undefined){
     await client.send({
       from: "louai.zaiter@ultimatejobs.co",
         to: user.email,
         subject: `thanks for applying to ${post.title}`,
-        html: `<p>Dear ${user.username}<br/> You have applied to ${post.title} at ${post.company}.<br/> We will review your CV and get back to you soon.  <br/>  Best Regards,<br/>  JobHunter Team</p>`,
+        html: `<p>Dear ${user.username}<br/> You have applied to ${post.title} at ${post.company}.<br/> We will review your CV and get back to you soon.🤖  <br/>  Best Regards,<br/>  JobHunter Team</p>`,
         content: ""
         });
-    
+        await client.close()
         console.log("email sent")
- 
-    await client.close()   
+    }
+    
     response.status=201;
     response.body= {message: "application created", appId: _id}
-  } catch (error) {
-    ctx.response.status = 401;
-    ctx.response.body = { message: "You are not Authorized to access route" };
-    return;
-  }
-
-  }
+}
 
 export const findByPostId= async (
     {params, response}: {params: {postId: string}; response:any}
