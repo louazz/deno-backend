@@ -30,6 +30,7 @@ export const signup = async (
     email: email,
     password: hashedPassword,
   });
+  try{
   await client.send({
     from: "louai.zaiter@ultimatejobs.co",
     to: email,
@@ -38,7 +39,10 @@ export const signup = async (
     <br/> <br/>Best Regards,<br/> JobHunter Team</p>`,
     content: ""
 });
-  await client.close()
+  await client.close()}catch(error){
+    response.status = 200;
+    response.body = { message: "user created", userId: _id, user: username };
+  }
   response.status = 200;
   response.body = { message: "user created", userId: _id, user: username };
 };
