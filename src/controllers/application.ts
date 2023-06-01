@@ -7,17 +7,20 @@ import { multiParser } from 'https://deno.land/x/multiparser/mod.ts'
 import { any } from "https://cdn.skypack.dev/ramda@^0.27.1";
 import { UserSchema } from "../schema/user.ts";
 import { PostSchema } from "../schema/post.ts";
-import { SmtpClient } from "https://deno.land/x/smtp/mod.ts";
+import { SMTPClient } from "https://deno.land/x/denomailer@1.6.0/mod.ts";
 
-const client = new SmtpClient();
-
-
-await client.connect({
-  hostname: "smtp-relay.sendinblue.com",
-  port: 587,
-  username: "encrygen@gmail.com",
-  password: "xOr9PCUjFHbDLKv0",
+const client = new SMTPClient({
+  connection: {
+    hostname: "smtp-relay.sendinblue.com",
+    port: 465,
+    tls: true,
+    auth: {
+      username: "encrygen@gmail.com",
+      password: "xOr9PCUjFHbDLKv0",
+    },
+  },
 });
+
 
 
 const applications= db.collection<ApplicationSchema>("application")
@@ -35,18 +38,19 @@ post_id: new ObjectId(post_id),
   const user = await Users.findOne({_id: new ObjectId(user_id)});
   const post = await Posts.findOne({_id: new ObjectId(post_id)});
   if ( user!= undefined && post!= undefined){
-   try{
+try{
     await client.send({
-      from: "louai.zaiter@ultimatejobs.co",
+      from: "Ultimate Jobs <encrygen@gmail.com>",
         to: user.email,
         subject: `thanks for applying to ${post.title}`,
         html: `<p>Dear ${user.username}<br/> You have applied to ${post.title} at ${post.company}.<br/> We will review your CV and get back to you soon.🤖  <br/>  Best Regards,<br/>  JobHunter Team</p>`,
         content: ""
         });
-    await client.close()}catch(error){
-      console.log(error);
-      response.status=201
-    }
+       // await client.close()
+}catch(error){
+    response.status= 201;
+    console.log("email not sent")
+}
         console.log("email sent")
     }
     
